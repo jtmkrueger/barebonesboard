@@ -21,6 +21,12 @@ RSpec.describe User, type: :model do
     it 'should require a last name' do
       build(:user, :last_name => '').should_not be_valid
     end
-    
+  end
+
+  context 'relationships' do
+    it 'should have many posts' do
+      rel = User.reflect_on_association(:posts)
+      rel.macro.should == :has_many
+    end
   end
 end
