@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
   before(:all) do
-    @user = build(:user)
+    @user = create(:user)
+  end
+
+  after(:all) do
+    @user.destroy
   end
 
   describe '#index' do
@@ -22,6 +26,19 @@ RSpec.describe PostsController, type: :controller do
     it 'renders the index view' do
       get :index
       response.should render_template :index
+    end
+  end
+
+  describe '#new' do
+    it 'renders the new view for a logged in user' do
+      sign_in @user
+      get :new
+      response.should render_template :new
+    end
+
+    it 'redirects to the sign in page if they havent logged in yet' do
+      get :new
+      response.should redirect_to :user_session
     end
   end
 end

@@ -4,4 +4,12 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all.includes(:comments)
   end
+
+  def new
+    @post = Post.new
+  end
+
+  def create
+
+  end
 end
