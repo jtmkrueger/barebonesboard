@@ -3,4 +3,6 @@ class Post < ActiveRecord::Base
   validates :body, presence: true
 
   belongs_to :user
+  has_many :posts
+  has_many :comments
 end

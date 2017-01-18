@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :comment do
-    body 'Stay on target... Stay on target!'
+    body Faker::StarWars.quote
   end
 end

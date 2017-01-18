@@ -24,5 +24,15 @@ RSpec.describe Post, type: :model do
       rel = Post.reflect_on_association(:user)
       rel.macro.should == :belongs_to
     end
+
+    it 'should have many posts' do
+      rel = Post.reflect_on_association(:posts)
+      rel.macro.should == :has_many
+    end
+
+    it 'should have many comments' do
+      rel = Post.reflect_on_association(:comments)
+      rel.macro.should == :has_many
+    end
   end
 end
