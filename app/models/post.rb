@@ -5,4 +5,6 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :posts
   has_many :comments
+
+  self.per_page = 5
 end

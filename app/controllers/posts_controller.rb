@@ -1,8 +1,14 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, :except => :index
+  respond_to :json, :html
+  before_action :authenticate_user!, :except => [:index, :show]
 
   def index
-    @posts = Post.all.includes(:comments)
+    @posts = Post.paginate(:page => params[:page]).order(:created_at => :desc)
+  end
+
+  def show
+    @post = Post.find(params[:id])
+    @comments = @post.comments.paginate(:page => params[:page]).order(:created_at => :desc)
   end
 
   def new
@@ -10,6 +16,16 @@ class PostsController < ApplicationController
   end
 
   def create
+    @post = Post.new(post_params)
+    @post.user_id = current_user.id
 
+    if @post.save
+      respond_with(@post)
+    end
   end
+
+ private
+    def post_params
+      params.permit(:title, :body)
+    end
 end

@@ -29,16 +29,17 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  describe '#new' do
-    it 'renders the new view for a logged in user' do
+  describe '#post' do
+    it 'returns the post json if theyre logged in' do
       sign_in @user
-      get :new
-      response.should render_template :new
+
+      post :create, {:title => Faker::StarWars.character, :body => Faker::StarWars.quote, :format => 'json'}
+      response.should be_success
     end
 
-    it 'redirects to the sign in page if they havent logged in yet' do
-      get :new
-      response.should redirect_to :user_session
+    it 'wont let unsigned in users create posts' do
+      post :create, {:title => Faker::StarWars.character, :body => Faker::StarWars.quote, :format => 'json'}
+      response.should_not be_success
     end
   end
 end
