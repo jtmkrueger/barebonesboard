@@ -6,7 +6,7 @@ end
 
 
 gem 'rails', '4.2.7.1'
-gem 'sqlite3', '~> 1.3'
+gem 'pg'
 
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
