@@ -10,11 +10,15 @@
       data:{title: $('#post-title').val(), body: $('#post-body').val()},
     })
       .done(function (data) {
-        console.log(data);
-        var template = Handlebars.compile($("#post-template").html());
-        var newPost = template(data);
-        $('#new-post').modal('hide');
-        $('#post-box').prepend(newPost);
+        if ($('#post-box').count > 0) {
+          var template = Handlebars.compile($("#post-template").html());
+          var newPost = template(data);
+          $('#new-post').modal('hide');
+          $('#post-box').prepend(newPost);
+        } else {
+          $('#new-post').modal('hide');
+          $('.notice').append('You have made a new post');
+        }
       });
   });
 
